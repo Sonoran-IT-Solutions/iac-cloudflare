@@ -1,0 +1,7 @@
+name: iac-cloudlare
+description: CloudFlare Resources
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+main: src/
