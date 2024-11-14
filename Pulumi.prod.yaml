@@ -1,2 +1,4 @@
 config:
   iac-cloudlare:domain: sonoranit.technology
+  cloudflare:apiToken:
+    secure: AAABAJRkKlKeg6LFqr+vevhrwfL9BuH08EixT5Oo41liGEIaIC4nYvwy5zdi+G6homtZltGwbBbY4MpGdBRTWllHAvUsKnC0
