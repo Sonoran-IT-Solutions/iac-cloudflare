@@ -46,7 +46,7 @@ jobs:
           comment-on-pr: true
 
       - name: 🚀 Update Infrastructure
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'push' }}
         uses: pulumi/actions@v6
         with:
           command: up
