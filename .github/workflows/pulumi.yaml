@@ -1,0 +1,55 @@
+---
+name: Pulumi
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/*'
+env:
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  PULUMI_STACK_NAME: sonoranit/iac-cloudlare/prod
+  PULUMI_WORKING_DIRECTORY: .
+
+jobs:
+  pulumi:
+    name: Pulumi
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔒️ Turnstile
+        if: ${{ github.event_name == 'push' }}
+        uses: softprops/turnstyle@v2.2.3
+
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v4
+
+      - name: ✨ Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
+      - name: 📦️ Install Dependencies
+        run: npm ci
+
+      - name: 🧐 Pull Request Preview
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: pulumi/actions@v6
+        with:
+          command: preview
+          stack-name: ${{ env.PULUMI_STACK_NAME }}
+          work-dir: ${{ env.PULUMI_WORKING_DIRECTORY }}
+          comment-on-pr: true
+
+      - name: 🚀 Update Infrastructure
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: pulumi/actions@v6
+        with:
+          command: up
+          stack-name: ${{ env.PULUMI_STACK_NAME }}
+          work-dir: ${{ env.PULUMI_WORKING_DIRECTORY }}
+          comment-on-summary: true
