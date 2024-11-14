@@ -22,7 +22,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@pulumi/cloudflare": "^5.43.0",
+    "@pulumi/cloudflare": "^5.40.2",
     "@pulumi/pulumi": "^3.113.0"
   }
 }
